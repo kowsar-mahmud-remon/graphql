@@ -17,6 +17,7 @@ type Product {
 
 type Query {
   products:[Product]
+  product(productId:ID!):Product
 }
 
   
@@ -25,6 +26,10 @@ type Query {
 const resolvers = {
   Query: {
     products: () => db.products,
+    product: (parent: any, args: { productId: string }, context: any) => {
+      const result = db.products.find((pd) => pd?.id === args?.productId);
+      return result;
+    },
   },
 };
 
